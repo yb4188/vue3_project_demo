@@ -13,7 +13,7 @@
       <el-form-item label="用户名" prop="username">
         <el-input
           v-model="ruleForm.username"
-          type="password"
+          type="text"
           autocomplete="off"
           class="loginForm"
         />
@@ -37,16 +37,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, reactive, toRefs, ref } from "vue";
+import { useRouter } from "vue-router";
+import { login } from "@/api/index";
 // 引入 loginTs限制
 import { loginData } from "../type/login";
+import type { FormInstance } from "element-plus";
 
 export default defineComponent({
   setup() {
-    console.log(new loginData());
-
     const data = reactive(new loginData());
-    console.log(data);
+    const router = useRouter();
 
     const rules = reactive({
       username: [
@@ -55,12 +56,36 @@ export default defineComponent({
       ],
       password: [
         { required: true, message: "请输入密码", trigger: "blur" },
-        { min: 8, max: 16, message: "密码长度为8-16", trigger: "blur" },
+        { min: 4, max: 12, message: "密码长度为4-12", trigger: "blur" },
       ],
     });
+
+    //创建ref
+    const ruleFormRef = ref<FormInstance>();
+    //登录
+    const submitForm = (formEl: FormInstance | undefined) => {
+      if (!formEl) return;
+      formEl.validate((valid) => {
+        if (valid) {
+          login(data.ruleForm).then((res) => {
+            if (res.data.code === 200) {
+              localStorage.setItem("token", res.data.token);
+              console.log(router);
+              router.push("/");
+            }
+          });
+        } else {
+          console.log("error submit!");
+          return false;
+        }
+      });
+    };
+    //重置
     return {
       ...toRefs(data),
       rules,
+      submitForm,
+      ruleFormRef,
     };
   },
 });
