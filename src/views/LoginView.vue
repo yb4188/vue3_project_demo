@@ -70,8 +70,7 @@ export default defineComponent({
           login(data.ruleForm).then((res) => {
             if (res.data.code === 200) {
               localStorage.setItem("token", res.data.token);
-              console.log(router);
-              router.push("/");
+              router.push("/home");
             }
           });
         } else {
@@ -81,11 +80,16 @@ export default defineComponent({
       });
     };
     //重置
+    const resetForm = (formEl: FormInstance | undefined) => {
+      if (!formEl) return;
+      formEl.resetFields();
+    };
     return {
       ...toRefs(data),
       rules,
       submitForm,
       ruleFormRef,
+      resetForm,
     };
   },
 });
