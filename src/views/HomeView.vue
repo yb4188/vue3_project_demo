@@ -11,7 +11,7 @@
       </el-header>
       <el-container>
         <!-- 左侧导航 -->
-        <el-aside width="200px">
+        <el-aside width="200px" >
           <el-menu
             active-text-color="#ffd04b"
             background-color="#545c64"
@@ -82,7 +82,7 @@ export default defineComponent({
 }
 .el-aside {
   .el-menu {
-    height: calc(100vh - 80px);
+    height: calc(100% - 80px);
   }
 }
 </style>

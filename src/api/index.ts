@@ -13,3 +13,11 @@ export function login(data: loginData) {
     data,
   });
 }
+
+//获取 商品 接口
+export function getShopList() {
+  return service({
+    url: "/getGoodsList",
+    method: "GET",
+  });
+}
