@@ -36,6 +36,15 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("../views/UsersView.vue"),
       },
+      {
+        path: "roles",
+        name: "roles",
+        meta: {
+          show: true,
+          title: "角色列表",
+        },
+        component: () => import("../views/RolesView.vue"),
+      },
     ],
   },
 ];
