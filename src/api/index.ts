@@ -21,3 +21,19 @@ export function getShopList() {
     method: "GET",
   });
 }
+
+//获取用户接口
+export function getUsersList() {
+  return service({
+    url: "/getUserList",
+    method: "get",
+  });
+}
+
+//获取角色接口
+export function getRolesList() {
+  return service({
+    url: "/getRoleList",
+    method: "get",
+  });
+}
