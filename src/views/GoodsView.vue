@@ -2,10 +2,18 @@
   <div>
     <el-form :inline="true" :model="searchData" class="demo-form-inline">
       <el-form-item label="商品名称">
-        <el-input v-model="searchData.title" placeholder="请输入商品名称" clearable />
+        <el-input
+          v-model="searchData.title"
+          placeholder="请输入商品名称"
+          clearable
+        />
       </el-form-item>
       <el-form-item label="商品详情">
-        <el-input v-model="searchData.introduce" placeholder="请输入商品详情" clearable />
+        <el-input
+          v-model="searchData.introduce"
+          placeholder="请输入商品详情"
+          clearable
+        />
       </el-form-item>
 
       <el-form-item>
@@ -31,7 +39,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, computed, watch } from "vue";
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  onMounted,
+  computed,
+  watch,
+} from "vue";
 import { getShopList } from "../api/index";
 import { shopList, listInt } from "../type/goods";
 export default defineComponent({
@@ -40,7 +55,7 @@ export default defineComponent({
 
     //页面挂载渲染数据
     onMounted(() => {
-      getShops()
+      getShops();
     });
 
     const getShops = async () => {
@@ -91,16 +106,19 @@ export default defineComponent({
         data.list = goodsList;
         data.searchData.count = goodsList.length;
       } else {
-        getShops()
+        getShops();
       }
     };
 
     //监视属性
-    watch([() => data.searchData.title, () => data.searchData.introduce], () => {
-      if (data.searchData.title === "" && data.searchData.introduce === "") {
-       getShops()
+    watch(
+      [() => data.searchData.title, () => data.searchData.introduce],
+      () => {
+        if (data.searchData.title === "" && data.searchData.introduce === "") {
+          getShops();
+        }
       }
-    });
+    );
 
     return {
       ...toRefs(data),
