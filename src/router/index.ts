@@ -1,10 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    component: () => import("../views/LoginView.vue"),
-  },
   {
     path: "/login",
     name: "login",
@@ -16,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/home",
     name: "home",
-    component: () => import("../views/HomeView.vue"),
+    component: HomeView,
     children: [
       {
         path: "goods",
@@ -36,6 +33,24 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("../views/UsersView.vue"),
       },
+      {
+        path: "roles",
+        name: "roles",
+        meta: {
+          show: true,
+          title: "角色列表",
+        },
+        component: () => import("../views/RolesView.vue"),
+      },
+      {
+        path: "auth",
+        name: "auth",
+        meta: {
+          show: false,
+          title: "权限列表",
+        },
+        component: () => import("../views/AuthView.vue"),
+      },
     ],
   },
 ];
@@ -44,5 +59,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem("token");
+//   if (!token && to.path !== "/login") {
+//     router.push("/login");
+//   }else{
+//     next()
+//   }
+// });
 
 export default router;

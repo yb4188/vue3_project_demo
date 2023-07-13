@@ -2,7 +2,11 @@
   <div>
     <el-form :inline="true" :model="searchData" class="demo-form-inline">
       <el-form-item label="用户昵称">
-        <el-input v-model="searchData.nickName" placeholder="请输入用户" clearable />
+        <el-input
+          v-model="searchData.nickName"
+          placeholder="请输入用户"
+          clearable
+        />
       </el-form-item>
       <el-form-item label="用户角色">
         <el-select
@@ -111,7 +115,10 @@ export default defineComponent({
     //查询功能
     const onSubmit = () => {
       let searchList: userInt[] = [];
-      if (userAndRoleInfo.searchData.nickName || userAndRoleInfo.searchData.role) {
+      if (
+        userAndRoleInfo.searchData.nickName ||
+        userAndRoleInfo.searchData.role
+      ) {
         if (userAndRoleInfo.searchData.nickName) {
           searchList = userAndRoleInfo.usersList.filter((item) => {
             return item.nickName.includes(userAndRoleInfo.searchData.nickName);
@@ -133,7 +140,10 @@ export default defineComponent({
 
     //监视数据变化 如果为空 还原列表
     watch(
-      [() => userAndRoleInfo.searchData.nickName, () => userAndRoleInfo.searchData.role],
+      [
+        () => userAndRoleInfo.searchData.nickName,
+        () => userAndRoleInfo.searchData.role,
+      ],
       () => {
         if (
           userAndRoleInfo.searchData.nickName === "" &&
@@ -163,14 +173,10 @@ export default defineComponent({
       let obj: any = userAndRoleInfo.usersList.find(
         (item) => item.id === userAndRoleInfo.activeInfo.id
       );
-      console.log(obj, 111);
       obj.nickName = userAndRoleInfo.activeInfo.nickName;
-      console.log(userAndRoleInfo.activeInfo, 222);
-      console.log(userAndRoleInfo.rolesList instanceof Array, 333);
       obj.role = userAndRoleInfo.rolesList.filter((value) => {
         return userAndRoleInfo.activeInfo.role.indexOf(value.roleId) !== -1;
       });
-      console.log(obj.role);
       userAndRoleInfo.usersList.forEach((item, index) => {
         if (item.id === obj.id) {
           userAndRoleInfo.usersList[index] = obj;

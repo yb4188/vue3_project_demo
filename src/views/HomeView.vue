@@ -4,20 +4,24 @@
       <!-- 头部 -->
       <el-header class="homeHeader">
         <el-row :gutter="20">
-          <el-col :span="4"><img src="../assets/logo.jpg" alt="" srcset="" /></el-col>
+          <el-col :span="4"
+            ><img src="../assets/logo.jpg" alt="" srcset=""
+          /></el-col>
           <el-col :span="16"><h1>后台管理系统</h1></el-col>
-          <el-col :span="4"><h4>退出登录</h4></el-col>
+          <el-col :span="4" class="elcol">
+            <el-button type="danger" @click="logout">退出登录</el-button>
+          </el-col>
         </el-row>
       </el-header>
       <el-container>
         <!-- 左侧导航 -->
-        <el-aside width="200px" >
+        <el-aside width="200px">
           <el-menu
             active-text-color="#ffd04b"
             background-color="#545c64"
             icon-menu
             class="el-menu-vertical-demo"
-            default-active="2"
+            :default-active="active"
             text-color="#fff"
             router
           >
@@ -42,19 +46,28 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 export default defineComponent({
   setup() {
     const router = useRouter();
+    const route = useRoute();
     const routerList = router.getRoutes();
 
     //筛选我们要展示的二级列表
     const filterRouterList = routerList.filter((item) => {
       return item.meta.show;
     });
+
+    //退出
+    const logout = () => {
+      localStorage.removeItem("token");
+      router.push("/login");
+    };
     return {
       filterRouterList,
+      active: route.path,
+      logout,
     };
   },
 });
@@ -78,6 +91,9 @@ export default defineComponent({
     text-align: center;
     line-height: 80px;
     color: violet;
+  }
+  .elcol {
+    line-height: 80px;
   }
 }
 .el-aside {

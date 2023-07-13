@@ -37,3 +37,11 @@ export function getRolesList() {
     method: "get",
   });
 }
+
+//获取权限接口
+export function getAuthList() {
+  return service({
+    url: "/getAuthorityList",
+    method: "get",
+  });
+}
